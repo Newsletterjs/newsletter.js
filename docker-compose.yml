@@ -1,0 +1,53 @@
+version: '2'
+services:
+  # api com we.js
+  api:
+    build:
+      context: ./server/api
+    volumes:
+      - "./server/api:/usr/src/app"
+    ports:
+     - "4040:4000"
+    links:
+     - database
+     - session
+    environment:
+      ENABLE_REQUEST_LOG: 1
+      DATABASE_URL: postgres://postgres:postgres@database:5432/postgres
+      REDIS_HOST: session
+      REDIS_PORT: 6379
+      REDIS_DB: 40,
+      REDIS_SECRET: 'akad09k109k1d-dkqd-dk-kd-a0sd-d0'
+    command: we run
+
+  # banco de dados
+  database:
+    image: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./.data/postgresql:/var/lib/postgresql
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+  # banco de sessao
+  session:
+    image: redis
+
+  # webapp com ember.js
+  webapp:
+    image: danlynn/ember-cli:2.7.0
+    volumes:
+      - ./client/admin:/myapp
+      - ./:/parent
+    entrypoint: ''
+    command: ember server --watcher polling
+    environment:
+      # git submodules reference fix
+      GIT_DIR: ./:/parent/client/admin
+    ports:
+      - "4200:4200"
+      - "35729:35729"
+      # porta padrão do live reload
+      - "49152:49152"

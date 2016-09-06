@@ -1,0 +1,6 @@
+[submodule "server/api"]
+	path = server/api
+	url = git@github.com:Newsletterjs/newsletter-api.git
+[submodule "client/admin"]
+	path = client/admin
+	url = git@github.com:Newsletterjs/newsletter-adminApp.git

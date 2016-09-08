@@ -43,7 +43,39 @@ git submodule update --init --recursive
 docker-compose up -d
 ```
 
-# Stack
+
+## Roadmap:
+
+- API
+  - Implement the email template load and email template file structure
+    - Email template need:
+      - settings file (index.js) 
+        - this file need to return one instance of EmailTemplate class 
+      - instance of EmailTemplate class (new)
+        - create method
+        - update method
+        - delete method
+      - html form (form.hbs) 
+      - preview image (preview.png)
+      - email files (see email-templates npm module):
+        - html.{ext}
+        - text.{ext}
+        - style.less
+  - Add suport for send emails with cron and max send per run (we.js commands + we.js cron features)
+- Client / site
+  - Add one for each newslleter with newslleter data and subscription form or unsubscribe form
+  - Login form
+- Admin
+  - add an authentication strategy (JSON web tokens or Oauth password grant method)
+  - Create pages with:
+    - logged in user email templates
+    - all logged in user newslleters
+    - create email with email tempalte form
+    - edit email
+    - preview email (may be in edit email ...)
+    - Send email action
+
+## Stack
 
 - We.js - server side api
 - Ember.js - admin

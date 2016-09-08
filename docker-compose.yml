@@ -12,6 +12,7 @@ services:
      - database
      - session
     environment:
+      PORT: 4000,
       ENABLE_REQUEST_LOG: 1
       DATABASE_URL: postgres://postgres:postgres@database:5432/postgres
       REDIS_HOST: session
@@ -34,20 +35,3 @@ services:
   # banco de sessao
   session:
     image: redis
-
-  # webapp com ember.js
-  webapp:
-    image: danlynn/ember-cli:2.7.0
-    volumes:
-      - ./client/admin:/myapp
-      - ./:/parent
-    entrypoint: ''
-    command: ember server --watcher polling
-    environment:
-      # git submodules reference fix
-      GIT_DIR: ./:/parent/client/admin
-    ports:
-      - "4200:4200"
-      - "35729:35729"
-      # porta padrão do live reload
-      - "49152:49152"
